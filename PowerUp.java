@@ -19,15 +19,12 @@ public class PowerUp extends SpaceObject {
      * Constructor for the powerup object.
      */
     public PowerUp() {
-
-	// Call constructor in parent class
-	super(0,0);
-
-	// Override exist flag which is set to true in super constructor
-	setExist(false);
-
-	// Initialise properties for the powerup object
-	initRandomObject();
+	    // Call constructor in parent class
+	    super(0,0);
+	    // Override exist flag which is set to true in super constructor
+	    setExist(false);
+	    // Initialise properties for the powerup object
+	    initRandomObject();
     }
 
     /**
@@ -35,8 +32,7 @@ public class PowerUp extends SpaceObject {
      * @return an int holding a value representing the type of powerup.
      */
     public int getPowerUpType() {
-	
-	return powerUpType;
+	    return powerUpType;
     }
 
     /**
@@ -45,13 +41,10 @@ public class PowerUp extends SpaceObject {
      * Overrides method in parent class.
      */
     public void setExist(boolean exist) {
-
-	super.setExist(exist);
-
-	// Randomly set powerup type each time exist flag is set to true
-	if (super.getExist()) {
-
-	    powerUpType = (int)(4* Math.random());
-	}
+	    super.setExist(exist);
+	    // Randomly set powerup type each time exist flag is set to true
+	    if (super.getExist()) {
+	        powerUpType = (int)(4* Math.random());
+	    }
     }
 }

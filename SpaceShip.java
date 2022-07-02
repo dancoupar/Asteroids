@@ -96,8 +96,7 @@ public class SpaceShip extends SpaceObject {
      * position of the ship.
      */
     public SpaceShip(double startLocation_x, double startLocation_y) {
-	
-	super(startLocation_x, startLocation_y);	
+	    super(startLocation_x, startLocation_y);	
     }
 
     /**
@@ -106,8 +105,7 @@ public class SpaceShip extends SpaceObject {
      * or not.
      */
     public boolean getAccelerating() {
-
-	return accelerating;
+    	return accelerating;
     }
 
     /**
@@ -115,8 +113,7 @@ public class SpaceShip extends SpaceObject {
      * @param a boolean which holds the new value for the flag.
      */  
     public void setAccelerating(boolean accelerating) {
-
-	this.accelerating = accelerating;
+	    this.accelerating = accelerating;
     }
 
     /**
@@ -124,8 +121,7 @@ public class SpaceShip extends SpaceObject {
      * @return the amount of shields left remaining.
      */
     public int getShieldsRemaining() {
-
-	return shieldsRemaining;
+    	return shieldsRemaining;
     }
 
     /**
@@ -133,20 +129,17 @@ public class SpaceShip extends SpaceObject {
      * @param a boolean which holds the new value for the shields.
      */ 
     public void setShieldsRemaining(int shieldsRemaining) {
+	    this.shieldsRemaining = shieldsRemaining;
+        // Make sure shields cannot be less than 0
+        if (shieldsRemaining <= 0) {
 
-	this.shieldsRemaining = shieldsRemaining;
+            this.shieldsRemaining = 0;
+        }
+        // Make sure shields do not exceed 100
+        if (shieldsRemaining > 100) {
 
-	// Make sure shields cannot be less than 0
-	if (shieldsRemaining <= 0) {
-
-	    this.shieldsRemaining = 0;
-	}
-
-	// Make sure shields do not exceed 100
-	if (shieldsRemaining > 100) {
-
-	    this.shieldsRemaining = 100;
-	}
+            this.shieldsRemaining = 100;
+        }
     }
 
     /**
@@ -154,8 +147,7 @@ public class SpaceShip extends SpaceObject {
      * @return the boolean flag indicating shield damage.
      */
     public boolean getShieldsDamaged() {
-
-	return shieldsDamaged;
+	    return shieldsDamaged;
     }
 
     /**
@@ -164,8 +156,7 @@ public class SpaceShip extends SpaceObject {
      * damage indicator.
      */
     public void setShieldsDamaged(boolean shieldsDamaged) {
-
-	this.shieldsDamaged = shieldsDamaged;
+	    this.shieldsDamaged = shieldsDamaged;
     }
 
     /**
@@ -174,19 +165,15 @@ public class SpaceShip extends SpaceObject {
      * @return the boolean indicating hyperspace or no hyperspace.
      */
     public boolean getHyperspace() {
-
-	// Increment timer
-	i++;
-
-	// If timer exceeds limit...
-	if (i > 5000) {
-
-	    // Take ship out of hyperspace
-	    hyperspace = false;
-	    i = 0;
-	}
-
-	return hyperspace;
+        // Increment timer
+        i++;
+        // If timer exceeds limit...
+        if (i > 5000) {
+            // Take ship out of hyperspace
+            hyperspace = false;
+            i = 0;
+        }
+        return hyperspace;
     }
 
     /**
@@ -195,8 +182,7 @@ public class SpaceShip extends SpaceObject {
      * flag.
      */
     public void setHyperspace(boolean hyperspace) {
-
-	this.hyperspace = hyperspace;
+	    this.hyperspace = hyperspace;
     }
 
     /**
@@ -205,8 +191,7 @@ public class SpaceShip extends SpaceObject {
      * upgraded or not.
      */
     public boolean getLaserUpgraded() {
-
-	return laserUpgraded;
+	    return laserUpgraded;
     }
 
     /**
@@ -215,15 +200,12 @@ public class SpaceShip extends SpaceObject {
      * upgrade flag.
      */
     public void setLaserUpgraded(boolean laserUpgraded) {
-
-	this.laserUpgraded = laserUpgraded;
-
-	// If the seismic upgrade has been collected...
-	if (laserUpgraded) {
-
-	    // Set the seismic shots remaining to 8
-	    shotsRemaining = 8;
-	}
+	    this.laserUpgraded = laserUpgraded;
+        // If the seismic upgrade has been collected...
+        if (laserUpgraded) {
+            // Set the seismic shots remaining to 8
+            shotsRemaining = 8;
+        }
     }
 
     /**
@@ -233,15 +215,12 @@ public class SpaceShip extends SpaceObject {
      * @return the number of shots remaining.
      */
     public int getShotsRemaining() {
-
-	// If player has no shots left...
-	if (shotsRemaining == 0) {
-
-	    // Return ship to normal firing mode
-	    laserUpgraded = false;
-	}
-
-	return shotsRemaining;
+        // If player has no shots left...
+        if (shotsRemaining == 0) {
+            // Return ship to normal firing mode
+            laserUpgraded = false;
+        }
+        return shotsRemaining;
     }
 
     /**
@@ -252,8 +231,7 @@ public class SpaceShip extends SpaceObject {
      * shots remaining.
      */
     public void setShotsRemaining(int shotsRemaining) {
-
-	this.shotsRemaining = shotsRemaining;
+	    this.shotsRemaining = shotsRemaining;
     }
 
     /**
@@ -262,8 +240,7 @@ public class SpaceShip extends SpaceObject {
      * @return the number of brakes the player has used.
      */
     public int getBrakesUsed() {
-
-	return brakesUsed;
+	    return brakesUsed;
     }
 
     /**
@@ -272,8 +249,7 @@ public class SpaceShip extends SpaceObject {
      * used.
      */
     public void setBrakesUsed(int brakesUsed) {
-
-	this.brakesUsed = brakesUsed;
+	    this.brakesUsed = brakesUsed;
     }
 
     /**
@@ -281,8 +257,7 @@ public class SpaceShip extends SpaceObject {
      * @return the players score.
      */
     public int getScore() {
-		
-	return score;
+	    return score;
     }
 
     /**
@@ -290,8 +265,7 @@ public class SpaceShip extends SpaceObject {
      * @param an int holding the new score.
      */
     public void setScore(int score) {
-
-	this.score = score;
+	    this.score = score;
     }
 
     /**
@@ -299,8 +273,7 @@ public class SpaceShip extends SpaceObject {
      * @return the speed the ship has reached.
      */
     public double getSpeed() {
-
-	return speed;
+	    return speed;
     }
 
     /**
@@ -311,40 +284,29 @@ public class SpaceShip extends SpaceObject {
      * Overrides the method in parent class.
      */
     public void updateLocation_x() {
-
-	double loc_x = super.getLocation_x();
-	double vel_x = super.getVelocity_x();
-	double vel_y = super.getVelocity_y();
-	int rot = super.getRotation();
-
-	if (accelerating) {
-
-	    // Calculate present speed as a function of the x and y velocities
-	    speed = Math.sqrt(Math.abs((vel_x * vel_x) + (vel_y * vel_y))); 
-
-	    // Check speed will not exceed limit if velocity is increased
-	    if (speed + Math.abs(vel_x + 0.3d * Math.sin(rot * ((2 * PI) / 360))) <= 20) {
-
-		if (!maxSpeedReached) {
-
-		    // Increase velocity
-		    super.setVelocity_x(vel_x + 0.3d* Math.sin(rot * ((2* PI) / 360)));
-		}
-
-		maxSpeedReached = false;
-	    }
-
-	    else {
-
-		maxSpeedReached = true;
-	    }
-	}
-
-	// Update location
-	super.setLocation_x(super.getLocation_x() + super.getVelocity_x());
-
-	// Keep ship within horizontal bounds
-	super.setLocation_x(super.checkBounds(super.getLocation_x()));
+        double loc_x = super.getLocation_x();
+        double vel_x = super.getVelocity_x();
+        double vel_y = super.getVelocity_y();
+        int rot = super.getRotation();
+        if (accelerating) {
+            // Calculate present speed as a function of the x and y velocities
+            speed = Math.sqrt(Math.abs((vel_x * vel_x) + (vel_y * vel_y))); 
+            // Check speed will not exceed limit if velocity is increased
+            if (speed + Math.abs(vel_x + 0.3d * Math.sin(rot * ((2 * PI) / 360))) <= 20) {
+                if (!maxSpeedReached) {
+                    // Increase velocity
+                    super.setVelocity_x(vel_x + 0.3d* Math.sin(rot * ((2* PI) / 360)));
+                }
+                maxSpeedReached = false;
+            }
+            else {
+                maxSpeedReached = true;
+            }
+        }
+        // Update location
+        super.setLocation_x(super.getLocation_x() + super.getVelocity_x());
+        // Keep ship within horizontal bounds
+	    super.setLocation_x(super.checkBounds(super.getLocation_x()));
     }
 
     /**
@@ -353,40 +315,28 @@ public class SpaceShip extends SpaceObject {
      * Overrides method in parent class.
      */
     public void updateLocation_y() {
-
-	double loc_y = super.getLocation_y();
-	double vel_x = super.getVelocity_x();
-	double vel_y = super.getVelocity_y();
-	int rot = super.getRotation();
-
-	if (accelerating) {
-
-	    // Calculate present speed as a function of the x and y velocities
-	    speed = Math.sqrt(/*Math.abs*/((vel_x * vel_x) + (vel_y * vel_y)));
-
-	    // Check speed will not exceed limit if velocity is increased
-	    if (speed + Math.abs(vel_y + 0.3d * Math.cos(rot * ((2* PI) / 360))) <= 20) {
-
-		if (!maxSpeedReached) {
-
-		    // Increase velocity
-		    super.setVelocity_y(vel_y + 0.3d* Math.cos(rot * ((2* PI) / 360)));
-		}
-
-		maxSpeedReached = false;
-	    }
-	
-	    else {
-
-		maxSpeedReached = true;
-	    }
-	}	
-
-	// Update location
-	super.setLocation_y(super.getLocation_y() + super.getVelocity_y());
-
-	// Keep ship within vertical bounds
-	super.setLocation_y(super.checkBounds(super.getLocation_y()));
+        double vel_x = super.getVelocity_x();
+        double vel_y = super.getVelocity_y();
+        int rot = super.getRotation();
+        if (accelerating) {
+            // Calculate present speed as a function of the x and y velocities
+            speed = Math.sqrt(/*Math.abs*/((vel_x * vel_x) + (vel_y * vel_y)));
+            // Check speed will not exceed limit if velocity is increased
+            if (speed + Math.abs(vel_y + 0.3d * Math.cos(rot * ((2* PI) / 360))) <= 20) {
+                if (!maxSpeedReached) {
+                    // Increase velocity
+                    super.setVelocity_y(vel_y + 0.3d * Math.cos(rot * ((2* PI) / 360)));
+                }
+                maxSpeedReached = false;
+            }
+            else {
+                maxSpeedReached = true;
+            }
+        }
+        // Update location
+        super.setLocation_y(super.getLocation_y() + super.getVelocity_y());
+        // Keep ship within vertical bounds
+        super.setLocation_y(super.checkBounds(super.getLocation_y()));
     }
 
     /**
@@ -396,8 +346,7 @@ public class SpaceShip extends SpaceObject {
      * @return an int indicating the direction the ship is rotating.
      */
     public int getRotateDirection() {
-
-	return rotateDirection;
+	    return rotateDirection;
     }
 
     /**
@@ -406,8 +355,7 @@ public class SpaceShip extends SpaceObject {
      * of the ships rotation.
      */
     public void setRotateDirection(int rotateDirection) {
-
-	this.rotateDirection = rotateDirection;
+	    this.rotateDirection = rotateDirection;
     }
 
     /**
@@ -415,38 +363,28 @@ public class SpaceShip extends SpaceObject {
      * Increments angle of rotation if the ship is rotating clockwise
      * and decrements angle of rotation if the ship is rotating
      * anti-clockwise.
-     * Overrides method in patent class.
+     * Overrides method in parent class.
      */
     public void updateRotation() {
-
-	// Rotating clockwise
-	if (rotateDirection == 1) {
-
-	    // If rotation reaches 360 reset to 0			    	    
-	    if (super.getRotation() == 360) {
-
-		super.setRotation(0);
-	    }
-
-	    // Increment angle of rotation
-	    super.setRotation(super.getRotation() + 6);
-
-	}
-
-	else {
-
-	    // Rotating anti-clockwise
-	    if (rotateDirection == -1) {
-
-		// If rotation reaches 0 reset to 360
-		if (super.getRotation() == 0) {
-
-		    super.setRotation(360);
-		}
-
-		// Decrement angle of rotation
-		super.setRotation(super.getRotation() - 6);
-	    }
-	}
+        // Rotating clockwise
+        if (rotateDirection == 1) {
+            // If rotation reaches 360 reset to 0			    	    
+            if (super.getRotation() == 360) {
+                super.setRotation(0);
+            }
+            // Increment angle of rotation
+            super.setRotation(super.getRotation() + 6);
+        }
+        else {
+            // Rotating anti-clockwise
+            if (rotateDirection == -1) {
+                // If rotation reaches 0 reset to 360
+                if (super.getRotation() == 0) {
+                    super.setRotation(360);
+                }
+                // Decrement angle of rotation
+                super.setRotation(super.getRotation() - 6);
+            }
+        }
     }
 }

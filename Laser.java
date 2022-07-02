@@ -23,8 +23,7 @@ public class Laser extends SpaceObject {
      * parent class which sets the starting location of the laser.
      */
     public Laser(double startLocation_x, double startLocation_y) {
-
-	super(startLocation_x, startLocation_y);
+    	super(startLocation_x, startLocation_y);
     }
 
     /**
@@ -32,8 +31,7 @@ public class Laser extends SpaceObject {
      * @param an int holding the new value for the distance travelled.
      */
     public void setDistanceTravelled(int distanceTravelled) {
-
-	this.distanceTravelled = distanceTravelled;
+	    this.distanceTravelled = distanceTravelled;
     }
 
     /**
@@ -41,14 +39,12 @@ public class Laser extends SpaceObject {
      * laser which has just been fired.
      */
     public void laserFire(double location_x, double location_y) {
-
-	// Set starting location
-	super.setLocation_x(location_x);
-	super.setLocation_y(location_y);
-
-	// Set velocity (fixed)
-	super.setVelocity_x(14* Math.sin(super.getRotation() * ((2* PI) / 360)));
-	super.setVelocity_y(14* Math.cos(super.getRotation() * ((2* PI) / 360)));
+	    // Set starting location
+	    super.setLocation_x(location_x);
+	    super.setLocation_y(location_y);
+	    // Set velocity (fixed)
+	    super.setVelocity_x(14* Math.sin(super.getRotation() * ((2* PI) / 360)));
+	    super.setVelocity_y(14* Math.cos(super.getRotation() * ((2* PI) / 360)));
     }
 
     /**
@@ -58,20 +54,15 @@ public class Laser extends SpaceObject {
      * distance, false otherwise.
      */
     public boolean checkDistance() {
-
-	if (distanceTravelled < 285) {
-
-	    // Increment distance travelled by laser
-	    distanceTravelled = distanceTravelled + 15;
-	}
-
-	else {
-
-	    // Reset the distance travelled
-	    distanceTravelled = 0;
-	    return false;
-	}
-
-	return true;
+        if (distanceTravelled < 285) {
+            // Increment distance travelled by laser
+            distanceTravelled = distanceTravelled + 15;
+        }
+        else {
+            // Reset the distance travelled
+            distanceTravelled = 0;
+            return false;
+        }
+        return true;
     }
 }

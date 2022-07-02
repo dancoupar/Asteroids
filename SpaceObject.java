@@ -52,10 +52,9 @@ public class SpaceObject {
      * @param a double holding the initial vertical position of the object.
      */
     public SpaceObject(double startLocation_x, double startLocation_y) {
-
-	location_x = startLocation_x;
-	location_y = startLocation_y;
-	exist = true;
+	    location_x = startLocation_x;
+	    location_y = startLocation_y;
+	    exist = true;
     }
 
     /**
@@ -63,8 +62,7 @@ public class SpaceObject {
      * @return the horizontal position of the object.
      */
     public double getLocation_x() {
-
-	return location_x;
+	    return location_x;
     }
 
     /**
@@ -72,8 +70,7 @@ public class SpaceObject {
      * @param a double holding the new value for the horizontal position.
      */
     public void setLocation_x(double location_x) {
-
-	this.location_x = location_x;
+	    this.location_x = location_x;
     }
 
     /**
@@ -81,8 +78,7 @@ public class SpaceObject {
      * @return the vertical position of the object.
      */
     public double getLocation_y() {
-
-	return location_y;
+	    return location_y;
     }
 
     /**
@@ -90,8 +86,7 @@ public class SpaceObject {
      * @param a double holding the new value for the vertical position.
      */
     public void setLocation_y(double location_y) {
-
-	this.location_y = location_y;
+	    this.location_y = location_y;
     }
 
     /**
@@ -99,8 +94,7 @@ public class SpaceObject {
      * @return the horiztonal component of velocity.
      */
     public double getVelocity_x() {
-
-	return velocity_x;
+	    return velocity_x;
     }
 
     /**
@@ -108,8 +102,7 @@ public class SpaceObject {
      * @param a double holding the new value for the horizontal velocity.
      */
     public void setVelocity_x(double velocity_x) {
-
-	this.velocity_x = velocity_x;
+	    this.velocity_x = velocity_x;
     }
 
     /**
@@ -117,8 +110,7 @@ public class SpaceObject {
      * @return the vertical component of velocity.
      */
     public double getVelocity_y() {
-
-	return velocity_y;
+	    return velocity_y;
     }
 
     /**
@@ -126,8 +118,7 @@ public class SpaceObject {
      * @param a double holding the new value for the vertical velocity.
      */
     public void setVelocity_y(double velocity_y) {
-
-	this.velocity_y = velocity_y;
+	    this.velocity_y = velocity_y;
     }
 
     /**
@@ -135,8 +126,7 @@ public class SpaceObject {
      * @return the angle of rotation.
      */
     public int getRotation() {
-
-	return rotation;
+	    return rotation;
     }
 
     /**
@@ -144,8 +134,7 @@ public class SpaceObject {
      * @param an int holding the new angle of rotation.
      */
     public void setRotation(int rotation) {
-
-	this.rotation = rotation;
+	    this.rotation = rotation;
     }
 
     /**
@@ -153,8 +142,7 @@ public class SpaceObject {
      * @return the rotate speed of the space object.
      */
     public void setRotateSpeed(int rotateSpeed) {
-
-	this.rotateSpeed = rotateSpeed;
+	    this.rotateSpeed = rotateSpeed;
     }
 
     /**
@@ -163,8 +151,7 @@ public class SpaceObject {
      * @return the flag indicating whether the object should be displayed.
      */
     public boolean getExist() {
-
-	return exist;
+	    return exist;
     }
 
     /**
@@ -173,8 +160,7 @@ public class SpaceObject {
      * @param a boolean holding the new value for the flag.
      */
     public void setExist(boolean exist) {
-
-	this.exist = exist;
+	    this.exist = exist;
     }
 
     /**
@@ -185,11 +171,9 @@ public class SpaceObject {
      * the checkBounds() in this class.
      */
     public void updateLocation_x() {
-
-	location_x = location_x + velocity_x;
-
-	// keep object within horizontal bounds
-	location_x = checkBounds(location_x);
+	    location_x = location_x + velocity_x;
+	    // keep object within horizontal bounds
+	    location_x = checkBounds(location_x);
     }
 
     /**
@@ -197,26 +181,21 @@ public class SpaceObject {
      * in exactly the same way as updateLocation_x().
      */
     public void updateLocation_y() {
-
-	location_y = location_y + velocity_y;
-
-	// keep object within vertical bounds
-	location_y = checkBounds(location_y);
+    	location_y = location_y + velocity_y;
+	    // keep object within vertical bounds
+    	location_y = checkBounds(location_y);
     }
 
-   /**
+    /**
      * Method to continually update the rotation of a space
      * object. Rotation is updated by adding the rotate speed
      * each time the method is called.
      */
     public void updateRotation() {
-
-	rotation = rotation + rotateSpeed;
-
-	if (rotation == 360) {
-
-	   rotation = 0;
-	}
+    	rotation = rotation + rotateSpeed;
+	    if (rotation == 360) {
+	        rotation = 0;
+	    }
     }
 
     /**
@@ -228,21 +207,15 @@ public class SpaceObject {
      * @return the new vertical or horizontal location of the object.
      */
     public double checkBounds(double location) {
-
-	if (location > 300) {
-	    
-	    location = 0;
-	}
-
-	else {
-		
-	    if (location < 0) {
-		    
-		location = 300;
-	    }
-	}
-
-	return location;
+        if (location > 300) {
+            location = 0;
+        }
+        else {
+            if (location < 0) {
+                location = 300;
+            }
+        }
+	    return location;
     }
 
     /**
@@ -250,57 +223,41 @@ public class SpaceObject {
      * for a random object. A Random object can only start at the edge
      * of the screen, and has a random velocity which moves the object
      * away from that edge.
-     * 
      */
     public void initRandomObject() {
-
-	// left edge
-	int side = (int)(4* Math.random());
-
-	if (side == 1) {
-
-	    location_x = 0;
-	    location_y = 300* Math.random();
-
-	    velocity_x = Math.random();
-	    velocity_y = 2* Math.random() - 1;
-	}
-	
-	else {
-
-	    // top edge	
-	    if (side == 2) {
-
-		location_x = 300* Math.random();
-		location_y = 300;
-
-		velocity_x = 2* Math.random() - 1;
-		velocity_y = -1* Math.random();
-	    }
-
-	    else {
-
-		// right edge
-		if (side == 3) {
-
-		    location_x = 300;
-		    location_y = 300* Math.random();
-
-		    velocity_x = -1* Math.random();
-		    velocity_y = 2* Math.random() - 1;
-		}
-
-		// bottom edge
-		else {
-
-		    location_x = 300* Math.random();
-		    location_y = 0;
-
-		    velocity_x = 2* Math.random() - 1;
-		    velocity_y = Math.random();
-		}
-	    }
-	}
+        // left edge
+        int side = (int)(4* Math.random());
+        if (side == 1) {
+            location_x = 0;
+            location_y = 300* Math.random();
+            velocity_x = Math.random();
+            velocity_y = 2* Math.random() - 1;
+        }
+        else {
+            // top edge	
+            if (side == 2) {
+                location_x = 300* Math.random();
+                location_y = 300;
+                velocity_x = 2* Math.random() - 1;
+                velocity_y = -1* Math.random();
+            }
+            else {
+                // right edge
+                if (side == 3) {
+                    location_x = 300;
+                    location_y = 300* Math.random();
+                    velocity_x = -1* Math.random();
+                    velocity_y = 2* Math.random() - 1;
+                }
+                // bottom edge
+                else {
+                    location_x = 300* Math.random();
+                    location_y = 0;
+                    velocity_x = 2* Math.random() - 1;
+                    velocity_y = Math.random();
+                }
+            }
+        }
     }		    		
 }
 

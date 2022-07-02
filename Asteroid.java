@@ -21,17 +21,14 @@ public class Asteroid extends SpaceObject {
      * @param the vertical start location of the asteroid to be created.
      */
     public Asteroid(int radius, double startLocation_x, double startLocation_y) {
-
-	// Call constructor in parent class
-	super(startLocation_x, startLocation_y);
-
-	// Set velocity (property held in parent class)
-	super.setVelocity_x(4* Math.random() - 2);
-	super.setVelocity_y(4* Math.random() - 2);
-
-	// Set rotate speed
-	super.setRotateSpeed((int)(20* Math.random() - 10));
-	this.radius = radius;
+        // Call constructor in parent class
+        super(startLocation_x, startLocation_y);
+        // Set velocity (property held in parent class)
+        super.setVelocity_x(4* Math.random() - 2);
+        super.setVelocity_y(4* Math.random() - 2);
+        // Set rotate speed
+        super.setRotateSpeed((int)(20* Math.random() - 10));
+        this.radius = radius;
     }
 
     /**
@@ -39,7 +36,6 @@ public class Asteroid extends SpaceObject {
      * @return the radius of the asteroid
      */
     public int getRadius() {
-
-	return radius;
+	    return radius;
     }
 }
