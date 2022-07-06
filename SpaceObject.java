@@ -12,22 +12,22 @@ public class SpaceObject {
     /**
      * Value to hold the x coordinate of the object.
      */
-    private double location_x;
+    private double xLocation;
 
     /**
      * Value to hold the y coordinate of the object.
      */
-    private double location_y;
+    private double yLocation;
 
     /**
      * Value to hold the horizontal component of the objects velocity.
      */
-    private double velocity_x;
+    private double xVelocity;
 
     /**
      * Value to hold the vertical component of the objects velocity.
      */
-    private double velocity_y;
+    private double yVelocity;
 
     /**
      * Integer value to hold the angle of rotation of the object.
@@ -44,81 +44,81 @@ public class SpaceObject {
     /**
      * Flag to indicate whether the object should be displayed or not.
      */
-    private boolean exist;
+    private boolean exists;
 
     /**
      * Constructor which creates a new generic space object.
      * @param a double holding the initial horizontal position of the object.
      * @param a double holding the initial vertical position of the object.
      */
-    public SpaceObject(double startLocation_x, double startLocation_y) {
-	    location_x = startLocation_x;
-	    location_y = startLocation_y;
-	    exist = true;
+    public SpaceObject(double xStartLocation, double yStartLocation) {
+	    this.xLocation = xStartLocation;
+	    this.yLocation = yStartLocation;
+	    this.exists = true;
     }
 
     /**
      * Accessor method to get the horizontal position of the object.
      * @return the horizontal position of the object.
      */
-    public double getLocation_x() {
-	    return location_x;
+    public double getXLocation() {
+	    return this.xLocation;
     }
 
     /**
      * Mutator method to set the horizontal position of the object.
      * @param a double holding the new value for the horizontal position.
      */
-    public void setLocation_x(double location_x) {
-	    this.location_x = location_x;
+    public void setXLocation(double xLocation) {
+	    this.xLocation = xLocation;
     }
 
     /**
      * Accessor method to get the vertical position of the object.
      * @return the vertical position of the object.
      */
-    public double getLocation_y() {
-	    return location_y;
+    public double getYLocation() {
+	    return this.yLocation;
     }
 
     /**
      * Mutator method to set the vertical position of the object.
      * @param a double holding the new value for the vertical position.
      */
-    public void setLocation_y(double location_y) {
-	    this.location_y = location_y;
+    public void setYLocation(double yLocation) {
+	    this.yLocation = yLocation;
     }
 
     /**
      * Accessor method to get the horizontal component of velocity.
      * @return the horiztonal component of velocity.
      */
-    public double getVelocity_x() {
-	    return velocity_x;
+    public double getXVelocity() {
+	    return this.xVelocity;
     }
 
     /**
      * Mutator method to set the horizontal component of velocity.
      * @param a double holding the new value for the horizontal velocity.
      */
-    public void setVelocity_x(double velocity_x) {
-	    this.velocity_x = velocity_x;
+    public void setXVelocity(double xVelocity) {
+	    this.xVelocity = xVelocity;
     }
 
     /**
      * Accessor method to get the vertical component of velocity.
      * @return the vertical component of velocity.
      */
-    public double getVelocity_y() {
-	    return velocity_y;
+    public double getYVelocity() {
+	    return this.yVelocity;
     }
 
     /**
      * Mutator method to set the vertical component of velocity.
      * @param a double holding the new value for the vertical velocity.
      */
-    public void setVelocity_y(double velocity_y) {
-	    this.velocity_y = velocity_y;
+    public void setYVelocity(double yVelocity) {
+	    this.yVelocity = yVelocity;
     }
 
     /**
@@ -126,7 +126,7 @@ public class SpaceObject {
      * @return the angle of rotation.
      */
     public int getRotation() {
-	    return rotation;
+	    return this.rotation;
     }
 
     /**
@@ -150,8 +150,8 @@ public class SpaceObject {
      * appear on screen.
      * @return the flag indicating whether the object should be displayed.
      */
-    public boolean getExist() {
-	    return exist;
+    public boolean getExists() {
+	    return this.exists;
     }
 
     /**
@@ -159,8 +159,8 @@ public class SpaceObject {
      * appear on screen.
      * @param a boolean holding the new value for the flag.
      */
-    public void setExist(boolean exist) {
-	    this.exist = exist;
+    public void setExists(boolean exist) {
+	    this.exists = exist;
     }
 
     /**
@@ -170,20 +170,18 @@ public class SpaceObject {
      * Also ensures the object does not leave the screen by calling
      * the checkBounds() in this class.
      */
-    public void updateLocation_x() {
-	    location_x = location_x + velocity_x;
+    public void updateXLocation() {
 	    // keep object within horizontal bounds
-	    location_x = checkBounds(location_x);
+	    this.xLocation = checkBounds(this.xLocation + this.xVelocity);
     }
 
     /**
      * Method to change the vertical location of the object. Works
-     * in exactly the same way as updateLocation_x().
+     * in exactly the same way as updateXLocation().
      */
-    public void updateLocation_y() {
-    	location_y = location_y + velocity_y;
+    public void updateYLocation() {
 	    // keep object within vertical bounds
-    	location_y = checkBounds(location_y);
+    	this.yLocation = checkBounds(yLocation + yVelocity);
     }
 
     /**
@@ -192,9 +190,9 @@ public class SpaceObject {
      * each time the method is called.
      */
     public void updateRotation() {
-    	rotation = rotation + rotateSpeed;
-	    if (rotation == 360) {
-	        rotation = 0;
+    	this.rotation = this.rotation + this.rotateSpeed;
+	    if (this.rotation == 360) {
+	        this.rotation = 0;
 	    }
     }
 
@@ -206,7 +204,7 @@ public class SpaceObject {
      * object.
      * @return the new vertical or horizontal location of the object.
      */
-    public double checkBounds(double location) {
+    public static double checkBounds(double location) {
         if (location > 300) {
             location = 0;
         }
@@ -228,33 +226,33 @@ public class SpaceObject {
         // left edge
         int side = (int)(4* Math.random());
         if (side == 1) {
-            location_x = 0;
-            location_y = 300* Math.random();
-            velocity_x = Math.random();
-            velocity_y = 2* Math.random() - 1;
+            this.xLocation = 0;
+            this.yLocation = 300* Math.random();
+            this.xVelocity = Math.random();
+            this.yVelocity = 2* Math.random() - 1;
         }
         else {
             // top edge	
             if (side == 2) {
-                location_x = 300* Math.random();
-                location_y = 300;
-                velocity_x = 2* Math.random() - 1;
-                velocity_y = -1* Math.random();
+                this.xLocation = 300* Math.random();
+                this.yLocation = 300;
+                this.xVelocity = 2* Math.random() - 1;
+                this.yVelocity = -1* Math.random();
             }
             else {
                 // right edge
                 if (side == 3) {
-                    location_x = 300;
-                    location_y = 300* Math.random();
-                    velocity_x = -1* Math.random();
-                    velocity_y = 2* Math.random() - 1;
+                    this.xLocation = 300;
+                    this.yLocation = 300* Math.random();
+                    this.xVelocity = -1* Math.random();
+                    this.yVelocity = 2* Math.random() - 1;
                 }
                 // bottom edge
                 else {
-                    location_x = 300* Math.random();
-                    location_y = 0;
-                    velocity_x = 2* Math.random() - 1;
-                    velocity_y = Math.random();
+                    this.xLocation = 300* Math.random();
+                    this.yLocation = 0;
+                    this.xVelocity = 2* Math.random() - 1;
+                    this.yVelocity = Math.random();
                 }
             }
         }

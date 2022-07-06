@@ -60,7 +60,7 @@ public class Game {
 		this.ship = ship;
 		this.cd = cd;
 		// Initialise level
-		initLevel(ship.getLocation_x(), ship.getLocation_y());
+		this.initLevel(ship.getXLocation(), ship.getYLocation());
     }
 
     /**
@@ -71,31 +71,31 @@ public class Game {
      * @param a double holding the vertical location of the goodie
      * ship object.
      */
-    public void initLevel(double ship_x, double ship_y) {
+    public void initLevel(double xShip, double yShip) {
 		// Reset the array to null
-		asteroids = new Asteroid[120];
-		double ast_x, ast_y;
+		this.asteroids = new Asteroid[120];
+		double xAst, yAst;
 		// Boolean to act as a flag indicating whether the random
 		// location generated as a starting position for the asteroid
 		// is suitable.
-		boolean positionOK = false;
+		boolean positionOk = false;
 		// Generate number of asteroids equal to level reached
 		for (int i = 0; i < level; i++) {
 	    	// ensure asteroids are not generated on top of ship!
 	    	do {
-				ast_x = 300* Math.random();
-				ast_y = 300* Math.random();		
-				if (!cd.collision(ship_x, ship_y, ast_x, ast_y, 30, 30)) {					
-		    		positionOK = true;
+				xAst = 300* Math.random();
+				yAst = 300* Math.random();		
+				if (!cd.collision(xShip, yShip, xAst, yAst, 30, 30)) {					
+		    		positionOk = true;
 				}
-	    	} while (!positionOK);
+	    	} while (!positionOk);
 			// Create new large asteroid in random location
-			asteroids[i] = new Asteroid(12, ast_x, ast_y);
+			this.asteroids[i] = new Asteroid(12, xAst, yAst);
 		}
 		// Reset the asteroids remaining
-		asteroidsRemaining = level;
+		this.asteroidsRemaining = level;
 		// Reset the total number of asteroids produced
-		asteroidCount = level;
+		this.asteroidCount = level;
     }
 
     /**
@@ -105,14 +105,14 @@ public class Game {
      */
     public int getAsteroidsRemaining() {
 		// Reset any previous counts
-		asteroidsRemaining = 0;
+		this.asteroidsRemaining = 0;
 		// Count up asteroids in existence
-		for (int i = 0; i < asteroidCount; i++) {
-			if (asteroids[i].getExist()) {
-				asteroidsRemaining++;
+		for (int i = 0; i < this.asteroidCount; i++) {
+			if (this.asteroids[i].getExists()) {
+				this.asteroidsRemaining++;
 			}
 		}
-		return asteroidsRemaining;
+		return this.asteroidsRemaining;
     }
 
     /**
@@ -122,7 +122,7 @@ public class Game {
      * been produced in the current level.
      */
     public int getAsteroidCount() {
-		return asteroidCount;
+		return this.asteroidCount;
     }
 
     /**
@@ -130,7 +130,7 @@ public class Game {
      * @return an int holding the current level.
      */
     public int getLevel() {
-		return level;
+		return this.level;
     }
 
     /**
@@ -141,22 +141,22 @@ public class Game {
 		// If no asteroids left...
 		if (getAsteroidsRemaining() == 0) {
 			// Level up!
-			level++;
+			this.level++;
 			// Change to next background
-			background++;
+			this.background++;
 			// Initialise the next level	    
-			initLevel(ship.getLocation_x(), ship.getLocation_y());
+			initLevel(ship.getXLocation(), ship.getYLocation());
 			// If player has reached over level 30...(!)
-			if (level > 30) {
+			if (this.level > 30) {
 				// Reset game to beginning level
-				level = 2;
+				this.level = 2;
 				// Initialise level
-				initLevel(ship.getLocation_x(), ship.getLocation_y());
+				initLevel(ship.getXLocation(), ship.getYLocation());
 			}
 			// If backgrounds run out...
-			if (background > 10) {
+			if (this.background > 10) {
 				// Go back to first background
-				background = 1;
+				this.background = 1;
 			}
 		}
     }
@@ -166,7 +166,7 @@ public class Game {
      * @return one asteroid object from the asteroids array.
      */
     public Asteroid getAsteroid(int i) {
-		return asteroids[i];
+		return this.asteroids[i];
     }
 
     /**
@@ -177,17 +177,17 @@ public class Game {
      * split.
      */
     public void splitAsteroid(Asteroid ast, int newRadius) {
-		double x = ast.getLocation_x();
-		double y = ast.getLocation_y();
+		double x = ast.getXLocation();
+		double y = ast.getYLocation();
 		// Destroy old asteroid
-		ast.setExist(false);
+		ast.setExists(false);
 		// Create first smaller asteroid
-		asteroids[asteroidCount] = new Asteroid(newRadius, x, y);
+		this.asteroids[asteroidCount] = new Asteroid(newRadius, x, y);
 		// Create second smaller asteroid
-		asteroids[asteroidCount + 1] = new Asteroid(newRadius, x, y);
+		this.asteroids[asteroidCount + 1] = new Asteroid(newRadius, x, y);
 		// Increase total number of asteroids and asteroids remaining
-		asteroidCount += 2;
-		asteroidsRemaining++;
+		this.asteroidCount += 2;
+		this.asteroidsRemaining++;
     }
 
     /**
@@ -196,9 +196,9 @@ public class Game {
      */
     public void showEnemyShip(EnemyShip baddie) {
 		// If ship not already displayed and random element is true...
-		if ((!baddie.getExist()) && (Math.random() > 0.999)) {
+		if ((!baddie.getExists()) && (Math.random() > 0.999)) {
 			// Show enemy ship
-			baddie.setExist(true);
+			baddie.setExists(true);
 			baddie.initRandomObject();
 		}
     }
@@ -209,11 +209,11 @@ public class Game {
      */
     public void showPowerUp(PowerUp p) {
 		// If power up not already displayed...
-		if (!p.getExist()) {
+		if (!p.getExists()) {
             // ...and random element is true...
 	    	if (Math.random() > 0.999) {
 				// Show power up
-				p.setExist(true);
+				p.setExists(true);
 				p.initRandomObject();
             }
 		}
@@ -223,7 +223,7 @@ public class Game {
 			// Until timer reaches limit
 			if (timer > lifeTime) {
 				// Get rid of power up
-				p.setExist(false);
+				p.setExists(false);
 				// Reset timer and lifetime of next powerup (random)
 				timer = 0;
 				lifeTime = (int)(300* Math.random()) + 200;

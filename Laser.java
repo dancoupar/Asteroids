@@ -22,8 +22,8 @@ public class Laser extends SpaceObject {
      * Constructor for the laser object. Calls the constructor in the
      * parent class which sets the starting location of the laser.
      */
-    public Laser(double startLocation_x, double startLocation_y) {
-    	super(startLocation_x, startLocation_y);
+    public Laser(double xStartLocation, double yStartLocation) {
+    	super(xStartLocation, yStartLocation);
     }
 
     /**
@@ -38,13 +38,13 @@ public class Laser extends SpaceObject {
      * Initialisation method which sets some basic properties for a
      * laser which has just been fired.
      */
-    public void laserFire(double location_x, double location_y) {
+    public void laserFire(double xLocation, double yLocation) {
 	    // Set starting location
-	    super.setLocation_x(location_x);
-	    super.setLocation_y(location_y);
+	    super.setXLocation(xLocation);
+	    super.setYLocation(yLocation);
 	    // Set velocity (fixed)
-	    super.setVelocity_x(14* Math.sin(super.getRotation() * ((2* PI) / 360)));
-	    super.setVelocity_y(14* Math.cos(super.getRotation() * ((2* PI) / 360)));
+	    super.setXVelocity(14* Math.sin(super.getRotation() * ((2* PI) / 360)));
+	    super.setYVelocity(14* Math.cos(super.getRotation() * ((2* PI) / 360)));
     }
 
     /**
@@ -54,13 +54,13 @@ public class Laser extends SpaceObject {
      * distance, false otherwise.
      */
     public boolean checkDistance() {
-        if (distanceTravelled < 285) {
+        if (this.distanceTravelled < 285) {
             // Increment distance travelled by laser
-            distanceTravelled = distanceTravelled + 15;
+            this.distanceTravelled = this.distanceTravelled + 15;
         }
         else {
             // Reset the distance travelled
-            distanceTravelled = 0;
+            this.distanceTravelled = 0;
             return false;
         }
         return true;

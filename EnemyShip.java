@@ -34,51 +34,51 @@ public class EnemyShip extends SpaceObject {
 		// If baddie is not already firing and random element is true
 		if ((!baddieLaser.getExist()) && (Math.random() > 0.99)) {
 			// Targetting algorithm for shooting at goodie ship
-			double diff_x;
-			double diff_y;
+			double xDiff;
+			double yDiff;
 			int random = (int)(20* Math.random() - 10);
 			// If enemy ship is left of goodie ship
-			if (ship.getLocation_x() > super.getLocation_x()) {
+			if (ship.getXLocation() > super.getXLocation()) {
 				// Calculate horizontal difference
-				diff_x = ship.getLocation_x() - super.getLocation_x();
+				xDiff = ship.getXLocation() - super.getXLocation();
 				// If enemy ship is above goodie ship
-				if (ship.getLocation_y() > super.getLocation_y()) {
+				if (ship.getYLocation() > super.getYLocation()) {
 					// Calculate vertical difference
-					diff_y = ship.getLocation_y() - super.getLocation_y();
+					yDiff = ship.getYLocation() - super.getYLocation();
 					// Set rotation of laser pointing towards goodie ship
-					baddieLaser.setRotation((int)((Math.atan(diff_x / diff_y)) * (360 / (2* PI))) + random);
+					baddieLaser.setRotation((int)((Math.atan(xDiff / yDiff)) * (360 / (2* PI))) + random);
 				}
 				else { // Enemy ship is below goodie ship
 					// Calculate vertical difference
-					diff_y = super.getLocation_y() - ship.getLocation_y();
+					yDiff = super.getYLocation() - ship.getYLocation();
 					// Set rotation of laser pointing toward goodie ship
-					baddieLaser.setRotation((int)((Math.atan(diff_y / diff_x)) * (360 / (2* PI))) +
+					baddieLaser.setRotation((int)((Math.atan(yDiff / xDiff)) * (360 / (2* PI))) +
 					random + 90);
 				}
 			}
 			else { // Enemy ship is to the right of goodie ship
 				// Calculate horizontal difference
-				diff_x = super.getLocation_x() - ship.getLocation_x();
+				xDiff = super.getXLocation() - ship.getXLocation();
 				// If enemy ship is below goodie ship
-				if (ship.getLocation_y() < super.getLocation_y()) {
+				if (ship.getYLocation() < super.getYLocation()) {
 					// Calculate vertical difference
-					diff_y = super.getLocation_y() - ship.getLocation_y();
+					yDiff = super.getYLocation() - ship.getYLocation();
 					// Set rotation of laser pointing toward goodie ship
-					baddieLaser.setRotation((int)((Math.atan(diff_x / diff_y)) * (360 / (2* PI))) +
+					baddieLaser.setRotation((int)((Math.atan(xDiff / yDiff)) * (360 / (2* PI))) +
 					random + 180);
 				}
 				else { // ship is above goodie ship
 					// Calculate vertical difference
-					diff_y = ship.getLocation_y() - super.getLocation_y();
+					yDiff = ship.getYLocation() - super.getYLocation();
 					// Set rotation of laser pointing toward goodie ship
-					baddieLaser.setRotation((int)((Math.atan(diff_y / diff_x)) * (360 / (2* PI))) +
+					baddieLaser.setRotation((int)((Math.atan(yDiff / xDiff)) * (360 / (2* PI))) +
 					random + 270);
 				}
 			}
 			// Set to true to indicate enemy ship is firing
 			baddieLaser.setExist(true);
 			// Method to set initial properties for the baddie laser  
-			baddieLaser.laserFire(super.getLocation_x(), super.getLocation_y());
+			baddieLaser.laserFire(super.getXLocation(), super.getYLocation());
 		}
     }
 }

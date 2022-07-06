@@ -19,12 +19,12 @@ public class CollisionDetector {
     /**
      * Double to hold the horizontal location of the explosion.
      */
-    private double explosionLocation_x;
+    private double xExplosionLocation;
 
     /**
      * Double to hold the vertical location of the explosion.
      */
-    private double explosionLocation_y;
+    private double yExplosionLocation;
 
     /**
      * Flag to indicate whether a shock wave should be displayed
@@ -40,12 +40,12 @@ public class CollisionDetector {
     /**
      * Double to hold the horizontal location of the shock wave.
      */
-    private double shockWaveLocation_x;
+    private double xShockWaveLocation;
 
     /**
      * Double to hold the vertical location of the shock wave.
      */
-    private double shockWaveLocation_y;
+    private double yShockWaveLocation;
 
     /**
      * Flag which is set to true for a very short space of time 
@@ -84,19 +84,19 @@ public class CollisionDetector {
      */
     public void checkCollisions(SpaceShip ship, Laser goodieLaser, Asteroid ast, Game game) {
 		// Set some 'shorthand' copies of variables.
-		double ship_x = ship.getLocation_x();
-		double ship_y = ship.getLocation_y();
-		double laser_x = goodieLaser.getLocation_x();
-		double laser_y = goodieLaser.getLocation_y();
-		double ast_x = ast.getLocation_x();
-		double ast_y = ast.getLocation_y();
+		double xShip = ship.getXLocation();
+		double yShip = ship.getYLocation();
+		double xLaser = goodieLaser.getXLocation();
+		double yLaser = goodieLaser.getYLocation();
+		double xAst = ast.getXLocation();
+		double yAst = ast.getYLocation();
 		int radius = ast.getRadius();
 		// Check the ship is not in hyperspace mode
 		if (!ship.getHyperspace()) { 	
 			// Check the ship has not recently been hit
 			if (!getShipImmune()) {
 				// Check ship and asteroid collision.
-				if (collision(ship_x, ship_y, ast_x, ast_y, 4, radius)) {
+				if (collision(xShip, yShip, xAst, yAst, 4, radius)) {
 					// Register ship hit
 					shipHit(ship);	    
 					if (radius == 12) { // Large asteroid
@@ -116,8 +116,8 @@ public class CollisionDetector {
 							// Reduce shields
 							ship.setShieldsRemaining(ship.getShieldsRemaining() - 5);
 							// Explode the small asteroid
-							ast.setExist(false);
-							startExplosion(ast.getLocation_x(), ast.getLocation_y(), 1);
+							ast.setExists(false);
+							startExplosion(ast.getXLocation(), ast.getYLocation(), 1);
 						}
 					}
 				}
@@ -126,7 +126,7 @@ public class CollisionDetector {
 		// Check if ship is firing
 		if (goodieLaser.getExist()) {
 			// Check collisions between the asteroid and the goodie laser.
-			if (collision(ast_x, ast_y, laser_x, laser_y, radius, 1)) {
+			if (collision(xAst, yAst, xLaser, yLaser, radius, 1)) {
 				// Register a laser hit
 				laserHit(ship, goodieLaser);
 				if (radius == 12) { // Large asteroid
@@ -146,8 +146,8 @@ public class CollisionDetector {
 						// Increase score
 						ship.setScore(ship.getScore() + 200);
 						// Explode the small asteroid
-						ast.setExist(false);
-						startExplosion(ast_x, ast_y, 1);
+						ast.setExists(false);
+						startExplosion(xAst, yAst, 1);
 					}
 				}
 			}
@@ -156,8 +156,8 @@ public class CollisionDetector {
 		if (shockWaveExist) {
 			// Check shockwave and asteroid collision. (Seismic waves
 			// do not affect enemy ship objects)
-			if (collision(ast_x, ast_y, shockWaveLocation_x,
-				shockWaveLocation_y, 0, shockWaveRadius)) {
+			if (collision(xAst, yAst, xShockWaveLocation,
+				yShockWaveLocation, 0, shockWaveRadius)) {
 				if (radius == 12) { // Large asteroid
 					// Split into two medium asteroids
 					game.splitAsteroid(ast, 8);
@@ -173,8 +173,8 @@ public class CollisionDetector {
 					}
 					else { // Small asteroid
 						// Destroy the asteroid
-						ast.setExist(false);		
-						startExplosion(ast.getLocation_x(), ast.getLocation_y(), 1);
+						ast.setExists(false);		
+						startExplosion(ast.getXLocation(), ast.getYLocation(), 1);
 						// Increase score
 						ship.setScore(ship.getScore() + 200);
 					}
@@ -195,20 +195,20 @@ public class CollisionDetector {
      */
     public void checkCollisions(EnemyShip baddie, Laser goodieLaser, 
 		Laser baddieLaser, SpaceShip ship) {
-		double ship_x = ship.getLocation_x();
-		double ship_y = ship.getLocation_y();
-		double baddie_x = baddie.getLocation_x();
-		double baddie_y = baddie.getLocation_y();
-		double glaser_x = goodieLaser.getLocation_x();
-		double glaser_y = goodieLaser.getLocation_y();
-		double blaser_x = baddieLaser.getLocation_x();
-		double blaser_y = baddieLaser.getLocation_y();
+		double xShip = ship.getXLocation();
+		double yShip = ship.getYLocation();
+		double xBaddie = baddie.getXLocation();
+		double yBaddie = baddie.getYLocation();
+		double xGLaser = goodieLaser.getXLocation();
+		double yGLaser = goodieLaser.getYLocation();
+		double xBLaser = baddieLaser.getXLocation();
+		double yBLaser = baddieLaser.getYLocation();
 		// Check enemy laser and ship collision.
 		if (!ship.getHyperspace()) {
 			if (baddieLaser.getExist()) { 	
-				if (collision(blaser_x, blaser_y, ship_x, ship_y, 0, 6)) {
+				if (collision(xBLaser, yBLaser, xShip, yShip, 0, 6)) {
 					// Stop baddie laser
-					baddieLaser.setExist(false);
+					baddieLaser.setExists(false);
 					baddieLaser.setDistanceTravelled(0);
 					// Register a ship hit
 					shipHit(ship);
@@ -220,11 +220,11 @@ public class CollisionDetector {
 		// If ship is firing...
 		if (goodieLaser.getExist()) { 	
 			// Check laser and enemy ship collision.
-			if (collision(glaser_x, glaser_y, baddie_x, baddie_y, 1, 8)) {
+			if (collision(xGLaser, yGLaser, xBaddie, yBaddie, 1, 8)) {
 				// Remove baddie ship
-				baddie.setExist(false);
+				baddie.setExists(false);
 				// Explode baddie ship
-				startExplosion(baddie_x, baddie_y, 2);
+				startExplosion(xBaddie, yBaddie, 2);
 				// Increase score
 				ship.setScore(ship.getScore() + 500);
 				// Register a laser hit
@@ -233,11 +233,11 @@ public class CollisionDetector {
 		}
 		if (!ship.getHyperspace()) {
 			// Check ship and enemy ship collision.
-			if (collision(ship_x, ship_y, baddie_x, baddie_y, 5, 4)) {
+			if (collision(xShip, yShip, xBaddie, yBaddie, 5, 4)) {
 				// Remove baddie ship
-				baddie.setExist(false);
+				baddie.setExists(false);
 				// Explode baddie ship
-				startExplosion(baddie_x, baddie_y, 2);
+				startExplosion(xBaddie, yBaddie, 2);
 				// Regiser a ship hit
 				shipHit(ship);
 				// Reduce shields
@@ -254,13 +254,13 @@ public class CollisionDetector {
 	 * @param the powerup objects.
 	 */
 	public void checkCollisions(SpaceShip ship, PowerUp p) {
-		double ship_x = ship.getLocation_x();
-		double ship_y = ship.getLocation_y();
-		double power_x = p.getLocation_x();
-		double power_y = p.getLocation_y();
-		if (collision(ship_x, ship_y, power_x, power_y, 4, 4)) {
+		double xShip = ship.getXLocation();
+		double yShip = ship.getYLocation();
+		double xPower = p.getXLocation();
+		double yPower = p.getYLocation();
+		if (collision(xShip, yShip, xPower, yPower, 4, 4)) {
 			// Remove the powerup
-			p.setExist(false);
+			p.setExists(false);
 			// Check what type of powerup was collected and act accordingly
 			if (p.getPowerUpType() == 1) { // Health bonus
 				ship.setShieldsRemaining(ship.getShieldsRemaining() + 20);
@@ -295,7 +295,7 @@ public class CollisionDetector {
 		}
 		else { // Ship has no shields remaining
 			// Game over!
-			ship.setExist(false);
+			ship.setExists(false);
 		}
     }
 
@@ -307,13 +307,13 @@ public class CollisionDetector {
      */
     public void laserHit(SpaceShip ship, Laser laser) {
 		// Stop goodie laser
-		laser.setExist(false);
+		laser.setExists(false);
 		// Reset the distance travelled by the goodie laser.
 		laser.setDistanceTravelled(0);
 		// If laser has been upgraded...
 		if (ship.getLaserUpgraded()) {
 	    	// Start a shock wave
-	    	startShockWave(laser.getLocation_x(), laser.getLocation_y());
+	    	startShockWave(laser.getXLocation(), laser.getYLocation());
 		}
     }
 
@@ -327,10 +327,10 @@ public class CollisionDetector {
      * @param an int holding a value which represents the type of
      * the explosion.
      */
-    public void startExplosion(double centre_x, double centre_y, int type) {
+    public void startExplosion(double xCentre, double yCentre, int type) {
 		explosionType = type;
-		explosionLocation_x = centre_x;
-		explosionLocation_y = centre_y;
+		xExplosionLocation = xCentre;
+		yExplosionLocation = yCentre;
 		explosionExist = true;
     }
 
@@ -357,8 +357,8 @@ public class CollisionDetector {
      * explosion.
      * @return the horizontal location of the explosion.
      */
-    public double getExplosionLocation_x() {
-		return explosionLocation_x;
+    public double getXExplosionLocation() {
+		return xExplosionLocation;
     }
 
     /**
@@ -366,8 +366,8 @@ public class CollisionDetector {
      * explosion.
      * @return the vertical location of the explosion.
      */
-    public double getExplosionLocation_y() {
-		return explosionLocation_y;
+    public double getYExplosionLocation() {
+		return yExplosionLocation;
     }
 
     /**
@@ -391,9 +391,9 @@ public class CollisionDetector {
      * @param a double containing the vertical location of the
      * centre of the shockwave origin.
      */
-    public void startShockWave(double centre_x, double centre_y) {
-		shockWaveLocation_x = centre_x;
-		shockWaveLocation_y = centre_y;
+    public void startShockWave(double xCentre, double yCentre) {
+		xShockWaveLocation = xCentre;
+		yShockWaveLocation = yCentre;
 		shockWaveExist = true;
     }
 
@@ -419,8 +419,8 @@ public class CollisionDetector {
      * shockwave.
      * @return the horizontal location of the shockwave.
      */
-    public double getShockWaveLocation_x() {
-		return shockWaveLocation_x;
+    public double getXShockWaveLocation() {
+		return xShockWaveLocation;
     }
 
     /**
@@ -428,8 +428,8 @@ public class CollisionDetector {
      * shockwave.
      * @return the vertical location of the shockwave.
      */
-    public double getShockWaveLocation_y() {
-		return shockWaveLocation_y;
+    public double getYShockWaveLocation() {
+		return yShockWaveLocation;
     }
 
     /**

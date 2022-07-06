@@ -143,10 +143,9 @@ public class AstApplication extends Applet {
 
     // Destroy the applet, the last thing to do
     public void destroy() {
-        //Stop animating the canvas
+        // Stop animating the canvas
         canvas.stop();
-
-        //Destroy the canvas
+        // Destroy the canvas
         canvas.destroy();
     }
 
@@ -156,12 +155,12 @@ public class AstApplication extends Applet {
 		/*
 		* Storage for current background texture.
 		*/
-		int[] texture = new int[1];
+		private final int[] texture = new int[1];
 
 		/*
 		* Storage for the asteroid texture.
 		*/
-		int[] asteroidTex = new int[1];
+		private final int[] asteroidTex = new int[1];
 
 		public renderCanvas(int w, int h) {
 			super(w, h);
@@ -199,7 +198,7 @@ public class AstApplication extends Applet {
 
 						// Point laser in direction of ship
 						goodieLaser.setRotation(ship.getRotation());
-						goodieLaser.laserFire(ship.getLocation_x(), ship.getLocation_y());
+						goodieLaser.laserFire(ship.getXLocation(), ship.getYLocation());
 
 						if (ship.getLaserUpgraded()) {
 							// Reduce number of seismic lasers remaining
@@ -211,19 +210,19 @@ public class AstApplication extends Applet {
 				case KeyEvent.VK_B:
 					if (ship.getBrakesUsed() < 2) {			
 						// Avoids wasting emergency brake if ship is not moving
-						if (ship.getVelocity_x() == 0 && ship.getVelocity_y() != 0) {
+						if (ship.getXVelocity() == 0 && ship.getYVelocity() != 0) {
 							// Stop ship dead
-							ship.setVelocity_x(0);
-							ship.setVelocity_y(0);
+							ship.setXVelocity(0);
+							ship.setYVelocity(0);
 							ship.setBrakesUsed(ship.getBrakesUsed()+1);
 						}
 					}
 					break;
 
-				case KeyEvent.VK_C: ship.setLocation_x(300* Math.random());
-					ship.setLocation_y(300* Math.random());
-					ship.setVelocity_x(0);
-					ship.setVelocity_y(0);
+				case KeyEvent.VK_C: ship.setXLocation(300* Math.random());
+					ship.setYLocation(300* Math.random());
+					ship.setXVelocity(0);
+					ship.setYVelocity(0);
 					break;
 			}	    
 		}
@@ -375,8 +374,8 @@ public class AstApplication extends Applet {
 		* Method to render the goodie spaceship.
 		*/
 		public void renderSpaceShip() {
-			double x = ship.getLocation_x();
-			double y = ship.getLocation_y();
+			double x = ship.getXLocation();
+			double y = ship.getYLocation();
 
 			gl.glBegin(GL_POLYGON);
 			gl.glColor3f(1.0f, 0.0f, 0.0f);
@@ -572,7 +571,7 @@ public class AstApplication extends Applet {
 				gl.glColor3f(_red, _green, _blue);
 				
 				// render the shield
-				renderCircle(ship.getLocation_x(), ship.getLocation_y(), 10);
+				renderCircle(ship.getXLocation(), ship.getYLocation(), 10);
 
 				_red = _red - 0.05f;
 				_green = _green - 0.1f;
@@ -596,8 +595,8 @@ public class AstApplication extends Applet {
 		*/
 		public void renderExplosion() {
 			if (cd.getExplosionExist()) {
-				double x = cd.getExplosionLocation_x();
-				double y = cd.getExplosionLocation_y();
+				double x = cd.getXExplosionLocation();
+				double y = cd.getYExplosionLocation();
 				int explosionEnd;
 				// type 1: asteroid explosion; small, blue
 				// type 2: enemy ship explosion; small, red
@@ -641,7 +640,7 @@ public class AstApplication extends Applet {
 			if (cd.getShockWaveExist()) {
 				gl.glColor3f(0.9f, 0.7f, 1.0f);
 				// Render shock wave
-				renderCircle(cd.getShockWaveLocation_x(), cd.getShockWaveLocation_y(),
+				renderCircle(cd.getXShockWaveLocation(), cd.getYShockWaveLocation(),
 				_shockRadius);
 				// Increase shock wave radius
 				_shockRadius = _shockRadius + 4;
@@ -663,8 +662,8 @@ public class AstApplication extends Applet {
 		*/
 		public void renderHyperspace() {
 			gl.glColor3f(1.0f, 1.0f, 1.0f);
-			renderCircle(ship.getLocation_x(), ship.getLocation_y(), _hyperRadius);
-			renderCircle(ship.getLocation_x(), ship.getLocation_y(), _hyperRadius / 2);
+			renderCircle(ship.getXLocation(), ship.getYLocation(), _hyperRadius);
+			renderCircle(ship.getXLocation(), ship.getYLocation(), _hyperRadius / 2);
 			_hyperRadius++;
 			if (_hyperRadius > 10) {
 				_hyperRadius = 0;
@@ -677,8 +676,8 @@ public class AstApplication extends Applet {
 		*/
 		public void renderPowerUp() {
 			// Get location of powerup
-			double x = p.getLocation_x();
-			double y = p.getLocation_y();
+			double x = p.getXLocation();
+			double y = p.getYLocation();
 			gl.glColor3f(1.0f, 1.0f, 1.0f);
 			// Render powerup 'bubble'
 			renderCircle(x, y, 4);
@@ -706,20 +705,20 @@ public class AstApplication extends Applet {
 				if (p.getPowerUpType() == 2) {
 					gl.glColor3f(1.0f, 1.0f, 0.0f);
 					// Yellow letter 'B' in the centre of the bubble
-					renderString("B", p.getLocation_x() - 1.6d, p.getLocation_y() - 1.8d);
+					renderString("B", p.getXLocation() - 1.6d, p.getYLocation() - 1.8d);
 				}
 				else {
 					// Hyperspace powerup
 					if (p.getPowerUpType() == 3) {
 						gl.glColor3f(0.5f, 0.8f, 1.0f);
 						// Blue letter 'H' in the centre of the bubble
-						renderString("H", p.getLocation_x() - 1.7d, p.getLocation_y() - 1.8d);
+						renderString("H", p.getXLocation() - 1.7d, p.getYLocation() - 1.8d);
 					}
 					// Seismic Laser powerup
 					else {
 						// Purple letter 'S' in the centre of the bubble
 						gl.glColor3f(1.0f, 0.0f, 1.0f);
-						renderString("S", p.getLocation_x() - 1.6d, p.getLocation_y() - 1.8d);
+						renderString("S", p.getXLocation() - 1.6d, p.getYLocation() - 1.8d);
 					}
 				}
 			}			
@@ -732,8 +731,8 @@ public class AstApplication extends Applet {
 		* @param the laser to be rendered. (Goodie or baddie)
 		*/
 		public void renderLaser(Laser laser) {
-			double x = laser.getLocation_x();
-			double y = laser.getLocation_y();
+			double x = laser.getXLocation();
+			double y = laser.getYLocation();
 			int rot = laser.getRotation();
 			// Draw laser in direction ship is pointing
 			gl.glBegin(GL_LINES);
@@ -748,8 +747,8 @@ public class AstApplication extends Applet {
 		* is accelerating.
 		*/
 		public void renderRetroRockets() {
-			double x = ship.getLocation_x();
-			double y = ship.getLocation_y();
+			double x = ship.getXLocation();
+			double y = ship.getYLocation();
 
 			gl.glBegin(GL_TRIANGLES);
 			gl.glColor3f(0.7f, 0.7f, 1.0f);
@@ -775,8 +774,8 @@ public class AstApplication extends Applet {
 		* Renders the enemy ship as a pink flying saucer.
 		*/
 		public void renderEnemyShip() {
-			double x = baddie.getLocation_x();
-			double y = baddie.getLocation_y();
+			double x = baddie.getXLocation();
+			double y = baddie.getYLocation();
 
 			gl.glColor3f(1.0f, 0.5f, 0.5f);
 			renderFilledCircle(x, y, 7);
@@ -829,14 +828,14 @@ public class AstApplication extends Applet {
 		public void renderAsteroid(Asteroid ast) {
 			// Check asteroid hasn't been destroyed
 			if (ast.getExist()) {
-				double x = ast.getLocation_x();
-				double y = ast.getLocation_y();
+				double x = ast.getXLocation();
+				double y = ast.getYLocation();
 				int rad = ast.getRadius();
 				int rot = ast.getRotation();
 
 				// Move and rotate asteroid
-				ast.updateLocation_x();
-				ast.updateLocation_y();
+				ast.updateXLocation();
+				ast.updateYLocation();
 				ast.updateRotation();
 
 				gl.glPushMatrix();
@@ -971,14 +970,14 @@ public class AstApplication extends Applet {
 			// Check players ship has not been destroyed
 			if (ship.getExist()) {
 				// Update ship movement and rotation
-				ship.updateLocation_x();
-				ship.updateLocation_y();
+				ship.updateXLocation();
+				ship.updateYLocation();
 				ship.updateRotation();
 				// Repeatedly draw new position and rotation of ship
 				gl.glPushMatrix();
-				gl.glTranslated(ship.getLocation_x(), ship.getLocation_y(), 0);
+				gl.glTranslated(ship.getXLocation(), ship.getYLocation(), 0);
 				gl.glRotated(-1*ship.getRotation(), 0, 0, 1);
-				gl.glTranslated(-1*ship.getLocation_x(), -1 * ship.getLocation_y(), 0);
+				gl.glTranslated(-1*ship.getXLocation(), -1 * ship.getYLocation(), 0);
 				renderSpaceShip();
 				gl.glPopMatrix();
 				// Render ships shield (only appears briefly after collision)
@@ -987,9 +986,9 @@ public class AstApplication extends Applet {
 				if (ship.getAccelerating()) {
 					// Draw ships rockets with the same position and rotation as the ship
 					gl.glPushMatrix();
-					gl.glTranslated(ship.getLocation_x(), ship.getLocation_y(), 0);
+					gl.glTranslated(ship.getXLocation(), ship.getYLocation(), 0);
 					gl.glRotated(-1*ship.getRotation(), 0, 0, 1);
-					gl.glTranslated(-1*ship.getLocation_x(), -1 * ship.getLocation_y(), 0);
+					gl.glTranslated(-1*ship.getXLocation(), -1 * ship.getYLocation(), 0);
 					renderRetroRockets();
 					gl.glPopMatrix();
 				}
@@ -1001,8 +1000,8 @@ public class AstApplication extends Applet {
 				// Check to see if goodie ship is firing
 				if (goodieLaser.getExist()) {
 					// Update location of goodie laser
-					goodieLaser.updateLocation_x();
-					goodieLaser.updateLocation_y();
+					goodieLaser.updateXLocation();
+					goodieLaser.updateYLocation();
 					// Get rid of laser if it has travelled distance of screen
 					goodieLaser.setExist(goodieLaser.checkDistance());
 					// If seismic laser upgrade has been obtained...
@@ -1021,22 +1020,22 @@ public class AstApplication extends Applet {
 				// If baddie ship is generated
 				if (baddie.getExist()) {
 					// Update the location of the baddie ship
-					baddie.updateLocation_x();
-					baddie.updateLocation_y();
+					baddie.updateXLocation();
+					baddie.updateYLocation();
 					// Spin the baddie ship continuously
 					baddie.updateRotation();
 					gl.glPushMatrix();
-					gl.glTranslated(baddie.getLocation_x(), baddie.getLocation_y(), 0);
+					gl.glTranslated(baddie.getXLocation(), baddie.getYLocation(), 0);
 					gl.glRotated(-1*baddie.getRotation(), 0, 0, 1);
-					gl.glTranslated(-1*baddie.getLocation_x(), -1 * baddie.getLocation_y(), 0);
+					gl.glTranslated(-1*baddie.getXLocation(), -1 * baddie.getYLocation(), 0);
 					renderEnemyShip();
 					gl.glPopMatrix();
 					// Calls method in Game.class which randomly generates the baddie laser
 					baddie.generateFiring(baddieLaser, ship);
 					if (baddieLaser.getExist()) {
 						// Update the location of the baddie laser
-						baddieLaser.updateLocation_x();
-						baddieLaser.updateLocation_y();
+						baddieLaser.updateXLocation();
+						baddieLaser.updateYLocation();
 						// Get rid of laser if it had travelled distance of screen
 						baddieLaser.setExist(baddieLaser.checkDistance());
 						// Baddie laser is light red
@@ -1051,8 +1050,8 @@ public class AstApplication extends Applet {
 				game.showPowerUp(p);
 				if (p.getExist()) {
 					// Update the location of the powerup
-					p.updateLocation_x();
-					p.updateLocation_y();
+					p.updateXLocation();
+					p.updateYLocation();
 					renderPowerUp();
 					// Continuously check for collision between the ship and the powerup
 					cd.checkCollisions(ship, p);
@@ -1073,9 +1072,9 @@ public class AstApplication extends Applet {
 			else { // Ship has been destroyed
 				renderString("G  A  M  E    O  V  E  R  !", 125, 150);
 				// Explode the ship!
-				cd.startExplosion(ship.getLocation_x(), ship.getLocation_y(), 3);
+				cd.startExplosion(ship.getXLocation(), ship.getYLocation(), 3);
 				renderExplosion();
-				// stop animating the canvas when the shock wave has finished		
+				// Stop animating the canvas when the shock wave has finished		
 				if (!cd.getExplosionExist()) {
 					stop();
 				}
