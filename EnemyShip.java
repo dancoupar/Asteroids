@@ -19,7 +19,7 @@ public class EnemyShip extends SpaceObject {
 		// Call constructor in parent class
 		super(0, 0);
 		// Override exist flag which is set to true in super constructor
-		super.setExist(false);
+		super.setExists(false);
 		// Initialise some basic properties in the parent class
 		super.initRandomObject();
 		// Set the spinning speed of the ship
@@ -32,7 +32,7 @@ public class EnemyShip extends SpaceObject {
      */
     public void generateFiring(Laser baddieLaser, SpaceShip ship) {
 		// If baddie is not already firing and random element is true
-		if ((!baddieLaser.getExist()) && (Math.random() > 0.99)) {
+		if ((!baddieLaser.getExists()) && (Math.random() > 0.99)) {
 			// Targetting algorithm for shooting at goodie ship
 			double xDiff;
 			double yDiff;
@@ -76,7 +76,7 @@ public class EnemyShip extends SpaceObject {
 				}
 			}
 			// Set to true to indicate enemy ship is firing
-			baddieLaser.setExist(true);
+			baddieLaser.setExists(true);
 			// Method to set initial properties for the baddie laser  
 			baddieLaser.laserFire(super.getXLocation(), super.getYLocation());
 		}

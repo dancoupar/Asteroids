@@ -8,8 +8,6 @@
 
 public class CollisionDetector {
 
-    private double PI = 3.1415926535;
-
     /**
      * Flag which indicates whether an explosion should be displayed
      * or not.
@@ -124,7 +122,7 @@ public class CollisionDetector {
 			}
 		}
 		// Check if ship is firing
-		if (goodieLaser.getExist()) {
+		if (goodieLaser.getExists()) {
 			// Check collisions between the asteroid and the goodie laser.
 			if (collision(xAst, yAst, xLaser, yLaser, radius, 1)) {
 				// Register a laser hit
@@ -205,7 +203,7 @@ public class CollisionDetector {
 		double yBLaser = baddieLaser.getYLocation();
 		// Check enemy laser and ship collision.
 		if (!ship.getHyperspace()) {
-			if (baddieLaser.getExist()) { 	
+			if (baddieLaser.getExists()) { 	
 				if (collision(xBLaser, yBLaser, xShip, yShip, 0, 6)) {
 					// Stop baddie laser
 					baddieLaser.setExists(false);
@@ -218,7 +216,7 @@ public class CollisionDetector {
 			}
 		}
 		// If ship is firing...
-		if (goodieLaser.getExist()) { 	
+		if (goodieLaser.getExists()) { 	
 			// Check laser and enemy ship collision.
 			if (collision(xGLaser, yGLaser, xBaddie, yBaddie, 1, 8)) {
 				// Remove baddie ship
